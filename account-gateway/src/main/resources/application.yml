@@ -1,0 +1,12 @@
+## YAML Template.
+
+zuul:
+  routes:
+    api:
+      path: /api/**
+      url: http://account.local.com:8080
+    
+    viventor:
+      path: /viventor/**
+      url: http://account.local.com:8081/web
+      

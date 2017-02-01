@@ -1,0 +1,28 @@
+version: '2'
+services:
+
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+      - "9000:9000"
+    extra_hosts:
+      - "account.local.com:192.168.99.100"
+
+  account-api:
+    image: account-api
+    container_name: account-api
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "account.local.com:192.168.99.100"
+
+  account-web:
+    image: danjellz/http-server
+    container_name: account-web
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./account-web:/public
+    extra_hosts:
+      - "account.local.com:192.168.99.100"  

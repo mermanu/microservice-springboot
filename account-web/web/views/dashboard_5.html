@@ -1,0 +1,85 @@
+<div ng-controller="MainCtrl as viventor" ng-init="getAccountData()">
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Account reference {{account_data.identifier}}</h2>
+        <h2>Balance:  {{account_data.balance}}</h2>
+
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeIn" >
+  <div class="col-lg-4">
+      <div class="ibox float-e-margins">
+          <div class="ibox-content" ng-controller="modalDemoCtrl">
+              <div class="text-center">
+                  <button class="btn btn-primary" ng-click="open()" ng-disabled="account_data.identifier == null">New deposit</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-lg-4">
+      <div class="ibox float-e-margins">
+          <div class="ibox-content" ng-controller="modalDemoCtrl">
+              <div class="text-center">
+                  <button class="btn btn-primary" ng-click="open1()" ng-disabled="account_data.identifier == null">Withdraw</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-lg-4" ng-init="getUserAccounts(6)">
+  <div class="ibox float-e-margins">
+        <div class="ibox-content" >
+          <h3>User accounts</h3>
+            <select ng-model="selectedItem" ng-change="changeAccount()">
+            <option ng-repeat="item in user_accounts" ng-selected="selectedItem == item.id" value="{{item.id}}">{{item.identifier}}</option>
+            </select>
+        </div>
+      </div>
+  </div>
+    <div class="p-w-md m-t-sm">
+      <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+
+                  <div class="ibox-content">
+
+                      <div class="table-responsive" >
+                            <table class="table table-striped">
+
+                                <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Detail</th>
+                                    <th></th>
+                                    <th>Balance</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody ng-repeat="transaction in account_data.transactionsList">
+
+                                <tr >
+                                    <td>{{transaction.date}}</td>
+                                    <td style="text-align: left">{{transaction.tranTypeDescription}}</td>
+                                    <td>{{transaction.detail}}</td>
+                                    <td style="text-align: right">{{transaction.tranTypeSymbol}} {{transaction.amount}}</td>
+                                    <td style="text-align: right">{{transaction.balance}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
