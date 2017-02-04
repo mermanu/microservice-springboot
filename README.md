@@ -1,6 +1,8 @@
 # microservice-springboot
 Project test using spring boot:
 
+0) dependencies: maven, java 8, docker
+
 1) account-api: api with the service in itself to manage the accounts of users (here is wrapped now the user model)
 Spring boot, postgresql
 
