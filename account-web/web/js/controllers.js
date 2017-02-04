@@ -6,11 +6,8 @@
  *
  */
 function MainCtrl($http, $scope, $rootScope) {
-    /**
-     * countries - Used as duallistbox in form advanced view
-     */
 
-    $http.get('/viventor/js/config.properties').then(function (response) {
+    $http.get('/app/js/config.properties').then(function (response) {
         $rootScope.ACCOUNT_API_URL=response.data.ACCOUNT_API_URL;
     });
 
@@ -34,8 +31,10 @@ function MainCtrl($http, $scope, $rootScope) {
        }
      };
 
-     $scope.getUserAccounts = function(val) {
-         return $http.get('//'+$rootScope.ACCOUNT_API_URL+'/v1/users/'+val+'/accounts').then(function(response){
+     $scope.getUserAccounts = function() {
+       var userId = $rootScope.userId;
+       $rootScope.userId = userId == null ? 1 : userId;
+         return $http.get('//'+$rootScope.ACCOUNT_API_URL+'/v1/users/'+$rootScope.userId+'/accounts').then(function(response){
            $scope.user_accounts = response.data;
          });
      };
@@ -47,7 +46,7 @@ function MainCtrl($http, $scope, $rootScope) {
 
      $scope.reloadPage = function() {
          $scope.getAccountData();
-         $scope.getUserAccounts(6);
+         $scope.getUserAccounts();
      };
 
 }
@@ -167,7 +166,7 @@ function ModalInstanceCtrl ($scope, $uibModalInstance, deposit, $http, $rootScop
         if(confirm("Do you want to confirm this withdraw transaction, ammount: "+$scope.form.deposit.amount.$modelValue)){
           $http({
             method : "POST",
-            url : ""+$rootScope.ACCOUNT_API_URL+"/v1/transactions/withdraw",
+            url : "http://"+$rootScope.ACCOUNT_API_URL+"/v1/transactions/withdraw",
             data :
               {
                 "accountid": Number($rootScope.accountId),

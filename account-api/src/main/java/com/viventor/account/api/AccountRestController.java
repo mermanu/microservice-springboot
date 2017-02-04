@@ -8,6 +8,7 @@ package com.viventor.account.api;
 import com.viventor.account.model.Accounts;
 import com.viventor.account.model.Transactions;
 import com.viventor.account.repository.AccountsRepository;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -57,12 +58,14 @@ public class AccountRestController {
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<Accounts> create(@RequestBody Accounts account) {
-        UUID uuid = UUID.randomUUID();
-        account.setIdentifier(uuid.toString());
+        account.setIdentifier(UUID.randomUUID().toString());
         account.setCreationdate(new Date());
         Date expirationDate =new Date();
         expirationDate.setYear(expirationDate.getYear() + 1);
         account.setExpirationdate(expirationDate);
+        account.setActivated(Boolean.TRUE);
+        account.setBalance(BigDecimal.ZERO);
+        account.setActivationkey(UUID.randomUUID().toString());
         return new ResponseEntity<>(accountsRepository.save(account), HttpStatus.OK);
     }
     
