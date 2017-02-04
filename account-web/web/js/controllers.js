@@ -9,14 +9,18 @@ function MainCtrl($http, $scope, $rootScope) {
     /**
      * countries - Used as duallistbox in form advanced view
      */
-     
 
-     $rootScope.$on('reloadEvent', function(event) {
+    $http.get('/viventor/js/config.properties').then(function (response) {
+        $rootScope.ACCOUNT_API_URL=response.data.ACCOUNT_API_URL;
+    });
+
+
+    $rootScope.$on('reloadEvent', function(event) {
          $scope.reloadPage();
     });
 
      $scope.getAccountTransactions = function() {
-         return $http.get('//account.local.com:9000/api/v1/accounts/'+$rootScope.accountId+'/transactions')
+         return $http.get('//'+$rootScope.ACCOUNT_API_URL+'/v1/accounts/'+$rootScope.accountId+'/transactions')
          .then(function(response){
            $scope.transactions = response.data;
          });
@@ -24,14 +28,14 @@ function MainCtrl($http, $scope, $rootScope) {
 
      $scope.getAccountData = function(val) {
        if($scope.user_accounts !== undefined){
-         return $http.get('//account.local.com:9000/api/v1/accounts/'+$rootScope.accountId).then(function(response){
+         return $http.get('//'+$rootScope.ACCOUNT_API_URL+'/v1/accounts/'+$rootScope.accountId).then(function(response){
            $scope.account_data = response.data;
          });
        }
      };
 
      $scope.getUserAccounts = function(val) {
-         return $http.get('//account.local.com:9000/api/v1/users/'+val+'/accounts').then(function(response){
+         return $http.get('//'+$rootScope.ACCOUNT_API_URL+'/v1/users/'+val+'/accounts').then(function(response){
            $scope.user_accounts = response.data;
          });
      };
@@ -134,7 +138,7 @@ function ModalInstanceCtrl ($scope, $uibModalInstance, deposit, $http, $rootScop
       if(confirm("Do you want to confirm this deposit transaction, ammount: "+$scope.form.deposit.amount.$modelValue)){
         $http({
           method : "POST",
-          url : "http://account.local.com:9000/api/v1/transactions/deposit",
+          url : "http://"+$rootScope.ACCOUNT_API_URL+"/v1/transactions/deposit",
           data :
             {
             	"accountid": Number($rootScope.accountId),
@@ -163,7 +167,7 @@ function ModalInstanceCtrl ($scope, $uibModalInstance, deposit, $http, $rootScop
         if(confirm("Do you want to confirm this withdraw transaction, ammount: "+$scope.form.deposit.amount.$modelValue)){
           $http({
             method : "POST",
-            url : "http://account.local.com:9000/api/v1/transactions/withdraw",
+            url : ""+$rootScope.ACCOUNT_API_URL+"/v1/transactions/withdraw",
             data :
               {
                 "accountid": Number($rootScope.accountId),

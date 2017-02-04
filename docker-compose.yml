@@ -6,9 +6,12 @@ services:
     image: api-gateway
     container_name: api-gateway
     ports:
-      - "9000:9000"
+      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
     extra_hosts:
-      - "account.local.com:192.168.99.100"
+      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"
+    environment:
+      - APP_SERVER_NAME=${APP_SERVER_NAME}
+      - APP_SERVER_PORT=${APP_SERVER_PORT}
 
   account-api:
     build: ./account-api/src/main/docker/
@@ -17,7 +20,13 @@ services:
     ports:
       - "8080:8080"
     extra_hosts:
-      - "account.local.com:192.168.99.100"
+      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"
+    environment:
+      - APP_SERVER_NAME=${APP_SERVER_NAME}
+      - DOCKER_HOST_IP=${DOCKER_HOST_IP}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   account-web:
     image: danjellz/http-server
@@ -27,4 +36,4 @@ services:
     volumes:
       - ./account-web:/public
     extra_hosts:
-      - "account.local.com:192.168.99.100"
+      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"

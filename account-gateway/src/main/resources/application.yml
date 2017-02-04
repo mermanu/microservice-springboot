@@ -4,9 +4,9 @@ zuul:
   routes:
     api:
       path: /api/**
-      url: http://account.local.com:8080
+      url: http://${APP_SERVER_NAME}:8080
     
     viventor:
-      path: /viventor/**
-      url: http://account.local.com:8081/web
+      path: /app/**
+      url: http://${APP_SERVER_NAME}:8081/web
       
