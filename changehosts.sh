@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # insert/update hosts entry
 ip_address=${DOCKER_HOST_IP}
 host_name=${APP_SERVER_NAME}

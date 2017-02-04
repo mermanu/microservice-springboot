@@ -1,3 +1,5 @@
+#!/bin/bash
+
 green=$(tput setaf 2)
 reset=$(tput sgr0)
 bold=$(tput bold)
@@ -6,7 +8,7 @@ filepath="$PWD"
 jsonstring="{"
 
 echo "${green}------------------------------------------------------------------------------------"
-echo "${green}Building viventor test: call to Manuel Merida for details :)"
+echo "${green}Building app test: call to Manuel Merida for details :)"
 echo "${green}------------------------------------------------------------------------------------"
 
 
@@ -36,7 +38,7 @@ mvn package docker:build -Dmaven.test.skip=true
 echo "${yellow}--> account-gateway build done"
 
 echo "${green}------------------------------------------------------------------------------------"
-echo "${green}Running viventor accounts app ...."
+echo "${green}Running accounts app ...."
 echo "${green}------------------------------------------------------------------------------------"
 echo "${reset}"
 
@@ -45,8 +47,22 @@ echo "${yellow}--> Setting up hosts file: ${DOCKER_HOST_IP}:${APP_SERVER_NAME}"
 sh /${filepath}/changehosts.sh
 echo "${reset}"
 
-docker-compose up
+# trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
+
+function ctrl_c() {
+  echo "${green}------------------------------------------------------------------------------------"
+  echo "${yellow}Killing app..."
+  echo "${green}------------------------------------------------------------------------------------"
+  echo "${reset}"
+  docker-compose down
+  docker kill $(docker ps -q)
+}
+
+
 echo "${green}------------------------------------------------------------------------------------"
-echo "${yellow}App is running on:---> ${APP_SERVER_NAME}:${APP_SERVER_PORT}/app/#/dashboards/dashboard_5"
+echo "${yellow}App will be running on:---> ${APP_SERVER_NAME}:${APP_SERVER_PORT}/app/#/dashboards/dashboard_5"
 echo "${green}------------------------------------------------------------------------------------"
 echo "${reset}"
+
+docker-compose up

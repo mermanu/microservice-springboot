@@ -43,7 +43,7 @@ function pageTitle($rootScope, $timeout) {
                 // Default title - load on Dashboard 1
                 var title = 'INSPINIA | Responsive Admin Theme';
                 // Create your own title pattern
-                if (toState.data && toState.data.pageTitle) title = 'VIVENTOR | ' + toState.data.pageTitle;
+                if (toState.data && toState.data.pageTitle) title = 'APP | ' + toState.data.pageTitle;
                 $timeout(function() {
                     element.text(title);
                 });

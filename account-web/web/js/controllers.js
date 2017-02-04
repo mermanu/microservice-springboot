@@ -202,5 +202,4 @@ function ModalInstanceCtrl ($scope, $uibModalInstance, deposit, $http, $rootScop
 angular
     .module('inspinia')
     .controller('MainCtrl', MainCtrl)
-    .controller('Viventor', 'Viventor')
     .controller('modalDemoCtrl', modalDemoCtrl);

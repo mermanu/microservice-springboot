@@ -6,9 +6,9 @@ services:
     image: api-gateway
     container_name: api-gateway
     ports:
-      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
+      - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
     extra_hosts:
-      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"
+      - ${APP_SERVER_NAME}:${DOCKER_HOST_IP}
     environment:
       - APP_SERVER_NAME=${APP_SERVER_NAME}
       - APP_SERVER_PORT=${APP_SERVER_PORT}
@@ -18,9 +18,9 @@ services:
     image: account-api
     container_name: account-api
     ports:
-      - "8080:8080"
+      - 8080:8080
     extra_hosts:
-      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"
+      - ${APP_SERVER_NAME}:${DOCKER_HOST_IP}
     environment:
       - APP_SERVER_NAME=${APP_SERVER_NAME}
       - DOCKER_HOST_IP=${DOCKER_HOST_IP}
@@ -32,8 +32,8 @@ services:
     image: danjellz/http-server
     container_name: account-web
     ports:
-      - "8081:8080"
+      - 8081:8080
     volumes:
       - ./account-web:/public
     extra_hosts:
-      - "${APP_SERVER_NAME}:${DOCKER_HOST_IP}"
+      - ${APP_SERVER_NAME}:${DOCKER_HOST_IP}
