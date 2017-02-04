@@ -1,6 +1,5 @@
 # microservice-springboot
 Project test using spring boot:
-
 1) account-api: api with the service in itself to manage the accounts of users (here is wrapped now the user model)
 Spring boot, postgresql
 2) api-gateway: entry point of all the petitions to the services, authorization, api, others.
